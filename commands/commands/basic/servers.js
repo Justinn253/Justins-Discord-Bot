@@ -1,5 +1,7 @@
 module.exports = {
     commands: ['servers'],
+    description: 'Shows every server that this bot is in.',
+    cooldown: 20,
     callback: (message, arguments, text, client) => {
         client.guilds.cache.forEach((guild) => {
             message.channel.send(

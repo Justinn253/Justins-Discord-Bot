@@ -1,9 +1,11 @@
-const economy = require('../../economy')
+const economy = require('../../../features/features/economy')
 
 const { floor, random } = Math
 
 module.exports = {
     commands: ['gamble'],
+    description: 'Gambles a specified amount of money (50/50 odds).',
+    cooldown: 5,
     minArgs: 1,
     expectedArgs: "<amount> or 'all'",
     callback: async (message, arguments) => {
@@ -12,8 +14,8 @@ module.exports = {
         const userMoney = await economy.getMoney(guildId, userId)
         const gambleAmount = arguments[0]
 
-        if (userMoney < 500 || gambleAmount < 500) {
-            message.reply('You need $500 or more to gamble.')
+        if (userMoney < 100 || gambleAmount < 100) {
+            message.reply('You need $100 or more to gamble.')
             return
         }
 

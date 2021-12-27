@@ -4,6 +4,8 @@ const { floor, random } = Math
 
 module.exports = {
     commands: ['randompic'],
+    description: 'Generates a random link to prnt.sc for random pictures.',
+    cooldown: 3,
     callback: (message, arguments, text) => {
         const characters = 'abcdefghijklmnopqrstuvwxyz0123456789'.split('')
         let id = '';

@@ -2,6 +2,8 @@ const Discord = require('discord.js')
 
 module.exports = {
     commands: ['serverinfo', 'si'],
+    description: 'Displays basic information about the server.',
+    cooldown: 20,
     callback: (message, arguments, text) => {
         const { guild } = message
 

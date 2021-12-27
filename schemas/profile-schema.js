@@ -6,11 +6,26 @@ const reqString = {
 }
 
 const profileSchema = mongoose.Schema({
-    guildId: reqString,
     userId: reqString,
     money: {
         type: Number,
-        required: true
+        default: 0
+    },
+    xp: {
+        type: Number,
+        default: 0
+    },
+    level: {
+        type: Number,
+        default: 1
+    },
+    time: {
+        type: Date,
+        default: Date.now
+    },
+    claimedFirstDaily: {
+        type: Boolean,
+        default: false
     }
 })
 

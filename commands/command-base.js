@@ -42,6 +42,8 @@ const validatePermissions = (permissions) => {
     }
 }
 
+let recentlyRan = [] // userId-command
+
 module.exports = (client, commandOptions) => {
     let {
         commands,
@@ -49,6 +51,7 @@ module.exports = (client, commandOptions) => {
         permissionError = 'You do not have permission to run this command.',
         minArgs = 0,
         maxArgs = null,
+        cooldown = -1,
         expectedArgs = '',
         permissions = [],
         requiredRoles = [],
@@ -87,7 +90,7 @@ module.exports = (client, commandOptions) => {
                     }
                 }
 
-                //Ensure the user has the required roles
+                // Ensure the user has the required roles
                 for (const requiredRole of requiredRoles) {
                     const role = guild.roles.cache.find(role => 
                         role.name === requiredRole)
@@ -95,6 +98,14 @@ module.exports = (client, commandOptions) => {
                         message.reply(`You must have the "${requiredRole}" role to use this command.`)
                         return
                     }
+                }
+
+                // Ensure the user has not ran this command too frequently
+                // userId-command
+                let cooldownString = `${member.id}-${commands[0]}`
+                if (cooldown > 0 && recentlyRan.includes(cooldownString)) {
+                    message.reply('You cannot use that command so soon, please wait.')
+                    return
                 }
 
                 // Split on any number of spaces
@@ -109,6 +120,15 @@ module.exports = (client, commandOptions) => {
                 )) {
                     message.reply(`Incorrect arguments! Use ${prefix}${alias} ${expectedArgs}`)
                     return
+                }
+
+                if (cooldown > 0) {
+                    recentlyRan.push(cooldownString)
+                    setTimeout(() => {
+                        recentlyRan = recentlyRan.filter((string) => {
+                            return string !== cooldownString
+                        })
+                    }, 1000 * cooldown)
                 }
 
                 // Handle the custom command code

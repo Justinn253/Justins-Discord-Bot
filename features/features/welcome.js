@@ -1,6 +1,6 @@
-const mongo = require('./mongo')
-const command = require('./commands')
-const welcomeSchema = require('./schemas/welcome-schema')
+const mongo = require('../../util/mongo')
+const command = require('../../util/commands')
+const welcomeSchema = require('../../schemas/welcome-schema')
 
 module.exports = (client) => {
     const cache = {
@@ -41,7 +41,7 @@ module.exports = (client) => {
                     upsert: true
                 })
             } finally {
-                mongoose.connection.close()
+                //mongoose.connection.close()
             }
         })
     })
@@ -60,7 +60,7 @@ module.exports = (client) => {
 
                     cache[guild.id] = data = [result.channelId, result.text]
                 } finally {
-                    mongoose.connection.close()
+                    //mongoose.connection.close()
                 }
             })
         }

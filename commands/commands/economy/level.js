@@ -1,7 +1,9 @@
-const economy = require('../../economy')
+const economy = require('../../../features/features/economy')
 
 module.exports = {
-    commands: ['balance', 'bal'],
+    commands: ['level'],
+    description: 'Displays your level progress',
+    cooldown: 3,
     maxArgs: 1,
     expectedArgs: "[Target user's @]",
     callback: async (message) => {
@@ -11,8 +13,8 @@ module.exports = {
         const guildId = message.guild.id
         const userId = target.id
 
-        const money = await economy.getMoney(guildId, userId)
+        const level = await economy.getLevel(guildId, userId)
 
-        message.reply(`${target}'s balance: $${money}`)
+        message.reply(`${target} is level: ${level}`)
     }
 }
