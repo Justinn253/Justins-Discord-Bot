@@ -1,7 +1,7 @@
 const mongo = require('./mongo')
 const messageCountSchema = require('./schemas/message-count-schema')
 
-module.exports = client => {
+module.exports = (client) => {
     client.on('messageCreate', async (message) => {
         const { author } = message
         const {id } = author
@@ -17,8 +17,10 @@ module.exports = client => {
                 },{
                     upsert: true
                 }).exec()
+
+                return
             } finally {
-                mongoose.connection.close()
+                //mongoose.connection.close()
             }
         })
     })

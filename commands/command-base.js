@@ -49,6 +49,7 @@ module.exports = (client, commandOptions) => {
         permissionError = 'You do not have permission to run this command.',
         minArgs = 0,
         maxArgs = null,
+        expectedArgs = '',
         permissions = [],
         requiredRoles = [],
         callback
@@ -106,12 +107,12 @@ module.exports = (client, commandOptions) => {
                 if (arguments.length < minArgs || (
                     maxArgs !== null && arguments.length > maxArgs
                 )) {
-                    message.reply(`Incorrect syntax! Use ${prefix}${alias} ${expectedArgs}`)
+                    message.reply(`Incorrect arguments! Use ${prefix}${alias} ${expectedArgs}`)
                     return
                 }
 
                 // Handle the custom command code
-                callback(message, arguments, arguments.join(' '))
+                callback(message, arguments, arguments.join(' '), client)
 
                 return
             }
