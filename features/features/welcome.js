@@ -52,7 +52,6 @@ module.exports = (client) => {
         let data = cache[guild.id]
 
         if (!data) {
-            console.log('FETCHING FROM DATABASE')
 
             await mongo().then(async (mongoose) => {
                 try {

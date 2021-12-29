@@ -52,6 +52,8 @@ module.exports = (client, commandOptions) => {
         minArgs = 0,
         maxArgs = null,
         cooldown = -1,
+        currentCooldown = -1,
+        cooldownEnd = -1,
         expectedArgs = '',
         permissions = [],
         requiredRoles = [],
@@ -63,7 +65,7 @@ module.exports = (client, commandOptions) => {
         commands = [commands]
     }
 
-    console.log(`Registering command "${commands[0]}"`)
+    //console.log(`Registering command "${commands[0]}"`)
 
     // Ensure the permissions are in an array and are all valid
     if (permissions.length) {
@@ -103,8 +105,10 @@ module.exports = (client, commandOptions) => {
                 // Ensure the user has not ran this command too frequently
                 // userId-command
                 let cooldownString = `${member.id}-${commands[0]}`
+                let timerEnd = 0
                 if (cooldown > 0 && recentlyRan.includes(cooldownString)) {
-                    message.reply('You cannot use that command so soon, please wait.')
+                    currentCooldown = Math.round((cooldownEnd - new Date().getTime()) / 1000)
+                    message.reply(`You cannot use that command so soon, please wait ${currentCooldown} seconds.`)
                     return
                 }
 
@@ -129,6 +133,8 @@ module.exports = (client, commandOptions) => {
                             return string !== cooldownString
                         })
                     }, 1000 * cooldown)
+                    cooldownEnd = new Date().getTime() + (1000 * cooldown)
+                    currentCooldown = cooldown
                 }
 
                 // Handle the custom command code

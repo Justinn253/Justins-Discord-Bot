@@ -23,11 +23,14 @@ module.exports = {
                     name: 'gamble <amount>',
                     value: 'Gambles a specified amount of money (50/50 odds).'
                 },{
-                    name: 'level <user>',
+                    name: 'level <user>, xp <user>',
                     value: 'Displays your level or another persons level.'
                 },{
                     name: 'pay <user> <amount>',
                     value: 'Pays a user a specified amount of your money.'
+                },{
+                    name: 'rob <user>',
+                    value: 'Attempts to rob someone for some of their money.'
                 },)
 
         message.channel.send({embeds: [embed]})

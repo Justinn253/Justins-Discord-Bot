@@ -1,6 +1,8 @@
 const mongo = require('../../util/mongo')
 const profileSchema = require('../../schemas/profile-schema')
 const messageCounter = require('./message-counter')
+const { now } = require('mongoose')
+const { db } = require('../../schemas/profile-schema')
 const { round } = Math
 
 const moneyCache = {} // { 'guildId-userId': money }
@@ -19,7 +21,6 @@ module.exports = (client) => {}
 module.exports.addMoney = async (guildId, userId, money) => {
     return await mongo().then(async (mongoose) => {
         try {
-            console.log('Running findOneAndUpdate()')
 
             const result = await profileSchema.findOneAndUpdate({
                 userId
@@ -50,7 +51,6 @@ module.exports.getMoney = async (guildId, userId) => {
 
     return await mongo().then(async (mongoose) => {
         try {
-            console.log('Running findOne()')
 
             const result = await profileSchema.findOne({
                 userId
@@ -82,7 +82,6 @@ module.exports.getLevel = async (guildId, userId) => {
 
     return await mongo().then(async (mongoose) => {
         try {
-            console.log('Running findOne()')
 
             const result = await profileSchema.findOne({
                 userId
@@ -113,7 +112,6 @@ module.exports.claimDaily = async (guildId, userId) => {
     return await mongo().then(async (mongoose) => {
         try {
             const result = await profileSchema.findOne({userId})
-            console.log('RESULTS:', result)
 
             canClaimDaily = false
             if (result) {
@@ -124,7 +122,7 @@ module.exports.claimDaily = async (guildId, userId) => {
                     const now = new Date().getTime()
 
                     const diffTime = Math.abs(now - then)
-                    const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24))
+                    const diffDays = diffTime / (1000 * 60 * 60 * 24)
 
                     if (diffDays <= 1) {
                         return [false, Math.round(1440 - (diffTime / (1000 * 60)))]
@@ -139,6 +137,7 @@ module.exports.claimDaily = async (guildId, userId) => {
             },{
                 userId,
                 $set: {
+                    time: new Date(),
                     claimedFirstDaily: true
                 }
             },{
@@ -147,6 +146,18 @@ module.exports.claimDaily = async (guildId, userId) => {
 
             return [canClaimDaily, 0]
 
+        } finally {
+            //mongoose.connection.close()
+        }
+    })
+}
+
+module.exports.sortByMoney = async (guildId, userId) => {
+    return await mongo().then(async (mongoose) => {
+        try {
+            profileSchema.find({}).sort({money: -1}).exec((err, docs) => {
+                
+            })  
         } finally {
             //mongoose.connection.close()
         }

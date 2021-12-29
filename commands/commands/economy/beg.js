@@ -6,7 +6,7 @@ const { floor, random } = Math
 module.exports = {
     commands: ['beg'],
     description: 'Begs for a small amount of money.',
-    cooldown: 1,
+    cooldown: 20,
     callback: async (message, arguments) => {
         const rollType = Math.ceil(Math.random() * 9)
         const rollLuck = Math.ceil(Math.random() * 3)
@@ -15,7 +15,6 @@ module.exports = {
 
         const userId = message.author.id
         const guildId = message.guild.id
-        console.log(userId)
 
         if (rollType < 3) {
             // Bad roll type (0 - 99)

@@ -19,7 +19,10 @@ module.exports = {
                 },{
                     name: 'nobitches <user>',
                     value: 'YOU GET NO BITCHES'
-                },)
+                },{
+                    name: '8ball',
+                    value: 'See if something is true or not.'
+                })
 
         message.channel.send({embeds: [embed]})
     }

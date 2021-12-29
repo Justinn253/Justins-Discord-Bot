@@ -1,7 +1,7 @@
 const economy = require('../../../features/features/economy')
 
 module.exports = {
-    commands: ['level'],
+    commands: ['level', 'xp'],
     description: 'Displays your level progress',
     cooldown: 3,
     maxArgs: 1,
