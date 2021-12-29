@@ -36,7 +36,7 @@ const addXP = async (guildId, userId, xpToAdd, message) => {
                 xp -= needed
 
                 if (!message.author == '923317732659826738') {
-                    message.author.send(`You are now level ${level} and received $2000!`)
+                    message.author.send(`You are now level ${level} and received $3000!`)
                 }
 
                 await economy.addMoney(guildId, userId, 2000) 

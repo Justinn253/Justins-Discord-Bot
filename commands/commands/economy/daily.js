@@ -10,8 +10,8 @@ module.exports = {
         
         canClaim = await economy.claimDaily(guildId, userId)
         if (canClaim[0]) {
-            message.reply('You have claimed your daily and earned $1000!')
-            await economy.addMoney(guildId, userId, 1000) 
+            message.reply('You have claimed your daily and earned $2000!')
+            await economy.addMoney(guildId, userId, 2000) 
         } else {
             message.reply(`You must wait ${canClaim[1]} minutes to claim your daily again.`)
         }

@@ -105,7 +105,6 @@ module.exports = (client, commandOptions) => {
                 // Ensure the user has not ran this command too frequently
                 // userId-command
                 let cooldownString = `${member.id}-${commands[0]}`
-                let timerEnd = 0
                 if (cooldown > 0 && recentlyRan.includes(cooldownString)) {
                     currentCooldown = Math.round((cooldownEnd - new Date().getTime()) / 1000)
                     message.reply(`You cannot use that command so soon, please wait ${currentCooldown} seconds.`)

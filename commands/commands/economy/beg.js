@@ -17,22 +17,22 @@ module.exports = {
         const guildId = message.guild.id
 
         if (rollType < 3) {
-            // Bad roll type (0 - 99)
+            // Bad roll type (0 - 200)
             embed.setColor('#FF0000')
             if (rollLuck == 1) {
                 embed.addFields({
                     name: 'Beg',
-                    value: `Nobody wanted to give you any money.`
+                    value: `Nobody wanted to give you any money. :(`
                 })
             } else if (rollLuck == 2) {
-                const amount = Math.ceil(Math.random() * (60 - 40) + 40)
+                const amount = Math.ceil(Math.random() * (150 - 100) + 150)
                 await economy.addMoney(guildId, userId, amount)
                 embed.addFields({
                     name: 'Beg',
                     value: `You were given some spare change. **+$${amount}**`
                 })
             } else {
-                const amount = Math.ceil(Math.random() * (100 - 60) + 60)
+                const amount = Math.ceil(Math.random() * (200 - 150) + 150)
                 await economy.addMoney(guildId, userId, amount)
                 embed.addFields({
                     name: 'Beg',
@@ -40,24 +40,24 @@ module.exports = {
                 })
             }
         } else if (rollType < 6) {
-            // Low average roll type (100 - 200)
+            // Low average roll type (200 - 350)
             embed.setColor('#FFA500')
             if (rollLuck == 1) {
-                const amount = Math.ceil(Math.random() * (130 - 100) + 100)
+                const amount = Math.ceil(Math.random() * (250 - 200) + 200)
                 await economy.addMoney(guildId, userId, amount)
                 embed.addFields({
                     name: 'Beg',
                     value: `**+$${amount}**`
                 })
             } else if (rollLuck == 2) {
-                const amount = Math.ceil(Math.random() * (160 - 130) + 130)
+                const amount = Math.ceil(Math.random() * (300 - 250) + 250)
                 await economy.addMoney(guildId, userId, amount)
                 embed.addFields({
                     name: 'Beg',
                     value: `**+$${amount}**`
                 })
             } else {
-                const amount = Math.ceil(Math.random() * (200 - 160) + 160)
+                const amount = Math.ceil(Math.random() * (350 - 300) + 300)
                 await economy.addMoney(guildId, userId, amount)
                 embed.addFields({
                     name: 'Beg',
@@ -65,24 +65,24 @@ module.exports = {
                 })
             }
         } else if (rollType < 9) {
-            // High average roll type (200-300)
+            // High average roll type (350 - 500)
             embed.setColor('#FFFF00')
             if (rollLuck == 1) {
-                const amount = Math.ceil(Math.random() * (230 - 200) + 200)
+                const amount = Math.ceil(Math.random() * (400 - 350) + 350)
                 await economy.addMoney(guildId, userId, amount)
                 embed.addFields({
                     name: 'Beg',
                     value: `**+$${amount}**`
                 })
             } else if (rollLuck == 2) {
-                const amount = Math.ceil(Math.random() * (260 - 230) + 230)
+                const amount = Math.ceil(Math.random() * (450 - 400) + 400)
                 await economy.addMoney(guildId, userId, amount)
                 embed.addFields({
                     name: 'Beg',
                     value: `**+$${amount}**`
                 })
             } else {
-                const amount = Math.ceil(Math.random() * (300 - 260) + 260)
+                const amount = Math.ceil(Math.random() * (500 - 450) + 450)
                 await economy.addMoney(guildId, userId, amount)
                 embed.addFields({
                     name: 'Beg',
@@ -90,24 +90,24 @@ module.exports = {
                 })
             }
         } else {
-            // Good roll type (400-600)
+            // Good roll type (500 - 650)
             embed.setColor('#00FF00')
             if (rollLuck == 1) {
-                const amount = Math.ceil(Math.random() * (450 - 400) + 400)
+                const amount = Math.ceil(Math.random() * (550 - 500) + 500)
                 await economy.addMoney(guildId, userId, amount)
                 embed.addFields({
                     name: 'Beg',
                     value: `**+$${amount}**`
                 })
             } else if (rollLuck == 2) {
-                const amount = Math.ceil(Math.random() * (500 - 450) + 450)
+                const amount = Math.ceil(Math.random() * (600 - 500) + 450)
                 await economy.addMoney(guildId, userId, amount)
                 embed.addFields({
                     name: 'Beg',
                     value: `**+$${amount}**`
                 })
             } else {
-                const amount = Math.ceil(Math.random() * (600 - 500) + 500)
+                const amount = Math.ceil(Math.random() * (650 - 600) + 600)
                 await economy.addMoney(guildId, userId, amount)
                 embed.addFields({
                     name: 'Beg',
