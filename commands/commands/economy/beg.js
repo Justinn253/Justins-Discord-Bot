@@ -6,7 +6,7 @@ const { floor, random } = Math
 module.exports = {
     commands: ['beg'],
     description: 'Begs for a small amount of money.',
-    cooldown: 20,
+    cooldown: 30,
     callback: async (message, arguments) => {
         const rollType = Math.ceil(Math.random() * 9)
         const rollLuck = Math.ceil(Math.random() * 3)

@@ -8,6 +8,12 @@ module.exports = {
     minArgs: 1,
     expectedArgs: "<message>",
     callback: (message, arguments, text) => {
+        for (i = 0; i < arguments.length; i++) {
+            if (arguments[i].startsWith('<@')) {
+                const tagId = arguments[i].substring(2, arguments[i].length-1)
+                arguments[i] = message.guild.members.cache.get(tagId).user.username
+            }
+        }
         const embed = new Discord.MessageEmbed()
         embed.setTitle(`8Ball - "${arguments.join(' ')}"`)
         embed.setColor('#9370DB')

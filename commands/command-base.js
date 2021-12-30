@@ -79,9 +79,10 @@ module.exports = (client, commandOptions) => {
     // listen for messages
     client.on('messageCreate', message => {
         const { member, content, guild } = message
-
         for (const alias of commands) {
-            if (content.toLowerCase().startsWith(`${prefix}${alias.toLowerCase()}`)) {
+            const theCommand = content.split(" ")[0]
+            //if (content.toLowerCase().startsWith(`${prefix}${alias.toLowerCase()}`)) {
+            if (theCommand == `${prefix}${alias.toLowerCase()}`) {    
 
 
                 // Ensure the user has the required permissions

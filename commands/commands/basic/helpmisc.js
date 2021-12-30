@@ -22,6 +22,9 @@ module.exports = {
                 },{
                     name: '8ball',
                     value: 'See if something is true or not.'
+                },{
+                    name: 'gigachad',
+                    value: 'Show them whos the real shrigma.'
                 })
 
         message.channel.send({embeds: [embed]})

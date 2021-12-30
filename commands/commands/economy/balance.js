@@ -1,3 +1,4 @@
+const Discord = require('discord.js')
 const economy = require('../../../features/features/economy')
 
 module.exports = {
@@ -15,6 +16,8 @@ module.exports = {
 
         const money = await economy.getMoney(guildId, userId)
 
-        message.reply(`${target}'s balance: $${money}`)
+        const embed = new Discord.MessageEmbed()
+        .setDescription(`${target}'s balance: **$${money}**`)
+        message.channel.send({embeds: [embed]})
     }
 }

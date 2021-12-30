@@ -21,7 +21,7 @@ module.exports = {
                     value: 'Claims your daily rewards.'
                 },{
                     name: 'gamble <amount>',
-                    value: 'Gambles a specified amount of money (50/50 odds).'
+                    value: 'Gambles a specified amount of money (40/60 odds).'
                 },{
                     name: 'level <user>, xp <user>',
                     value: 'Displays your level or another persons level.'

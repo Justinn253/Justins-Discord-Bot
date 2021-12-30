@@ -1,3 +1,4 @@
+const Discord = require('discord.js')
 const economy = require('../../../features/features/economy')
 
 module.exports = {
@@ -15,6 +16,8 @@ module.exports = {
 
         const level = await economy.getLevel(guildId, userId)
 
-        message.reply(`${target} is level: ${level}`)
+        const embed = new Discord.MessageEmbed()
+        .setDescription(`${target} is level: **${level}**`)
+        message.channel.send({embeds: [embed]})
     }
 }

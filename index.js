@@ -47,6 +47,7 @@ client.on('ready', async () => {
     // Message-Counter
     messageCount(client)
 
+    // Levels
     levels(client)
 
 })
