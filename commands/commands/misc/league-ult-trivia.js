@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const { floor, random } = Math
+const economy = require('../../../features/features/economy')
 
 module.exports = {
     commands: ['leagueult'],
@@ -12,7 +13,6 @@ module.exports = {
 
         const ultName = getRandomKey(triviaMap)
         const championName = triviaMap.get(ultName)
-        console.log(ultName, championName)
 
         const embed = new Discord.MessageEmbed()
             .setTitle('League Ultimate Abilities Trivia')
@@ -38,25 +38,9 @@ module.exports = {
             m.content.toLowerCase() == championName.toLowerCase()
         }
 
-        const collector = new Discord.MessageCollector(message.channel, filter, {
-            max: 1,
-            time: 1000 * 5
-        })
+        const collector = new Discord.MessageCollector(message.channel, filter)
 
         let answered = false
-        collector.on('collect', async (m) => {
-            if (m.content.toLowerCase() == championName.toLowerCase()) {
-                console.log(m.content)
-                const winnerEmbed = new Discord.MessageEmbed()
-                    .setTitle('League Ultimate Abilities Trivia')
-                    .setDescription(`${m.author.username} has guessed the champion first! The correct answer was \`${championName}\`.`)
-                    .setColor('#2E5EC6')
-                collector.stop()
-                answered = true
-                return message.channel.send({embeds: [winnerEmbed]});
-            }
-        });
-
         setTimeout(() => {
             if (!answered) {
                 collector.stop()
@@ -67,6 +51,22 @@ module.exports = {
                 message.channel.send({embeds: [endEmbed]})
             }
         }, 15000)
+        const timerEnd = new Date().getTime()
+
+        collector.on('collect', async (m) => {
+            if (m.content.toLowerCase() == championName.toLowerCase()) {
+                const guessTime = Math.round((new Date().getTime() - timerEnd) / 1000)
+                const moneyEarned = Math.round((((timerEnd + 15000) - new Date().getTime()) * 20) / 1000)
+                const winnerEmbed = new Discord.MessageEmbed()
+                    .setTitle('League Ultimate Abilities Trivia')
+                    .setDescription(`${m.author.username} has guessed the champion first in ${guessTime} seconds and earned ${moneyEarned}! The correct answer was \`${championName}\`.`)
+                    .setColor('#2E5EC6')
+                collector.stop()
+                answered = true
+                economy.addMoney(m.guild.id, m.author.id, moneyEarned)
+                return message.channel.send({embeds: [winnerEmbed]})
+            }
+        })
     }
 }
 
@@ -100,7 +100,7 @@ function createTriviaMap(triviaMap, selection) {
         triviaMap.set('Pyroclasm', 'Brand')
         triviaMap.set('Glacial Fissure', 'Braum')
         triviaMap.set('Ace in the Hole', 'Caitlyn')
-        triviaMap.set('Camille', 'Camille')
+        triviaMap.set('Hextech Ultimatum', 'Camille')
         triviaMap.set('Petrifying Gaze', 'Cassiopeia')
         triviaMap.set('Feast', 'Cho\'Gath')
     } else if (selection == 3) {
@@ -141,7 +141,7 @@ function createTriviaMap(triviaMap, selection) {
         triviaMap.set('Fate\'s Call', 'Kalista')
         triviaMap.set('Mantra', 'Karma')
         triviaMap.set('Requiem', 'Karthus')
-        triviaMap.set('Riftwalk', 'Kassidin')
+        triviaMap.set('Riftwalk', 'Kassadin')
         triviaMap.set('Death Lotus', 'Katarina')
         triviaMap.set('Divine Judgement', 'Kayle')
         triviaMap.set('Umbral Trespass', 'Kayn')

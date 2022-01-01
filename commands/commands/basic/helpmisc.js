@@ -25,6 +25,12 @@ module.exports = {
                 },{
                     name: 'gigachad',
                     value: 'Show them whos the real shrigma.'
+                },{
+                    name: 'leagueult',
+                    value: 'Trivia game - Guess the league champion based on their ultimate name.'
+                },{
+                    name: 'leaguetitle',
+                    value: 'Trivia game - Guess the league champion based on their title.'
                 })
 
         message.channel.send({embeds: [embed]})
