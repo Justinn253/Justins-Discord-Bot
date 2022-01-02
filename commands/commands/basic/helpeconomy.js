@@ -20,6 +20,9 @@ module.exports = {
                     name: 'daily',
                     value: 'Claims your daily rewards.'
                 },{
+                    name: 'baltop',
+                    value: 'See the global balance leaderboard.'
+                },{
                     name: 'gamble <amount>',
                     value: 'Gambles a specified amount of money (40/60 odds).'
                 },{

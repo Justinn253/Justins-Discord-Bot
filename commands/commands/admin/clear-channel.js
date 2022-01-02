@@ -1,5 +1,5 @@
 module.exports = {
-    commands: ['clearchannel', 'cc'],
+    commands: ['clearchannel'],
     description: '(ADMIN) Clears a channel of all messages.',
     permissionError: 'You need admin permission to run this command',
     callback: (message, arguments, text) => {

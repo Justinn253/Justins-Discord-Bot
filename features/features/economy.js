@@ -18,7 +18,7 @@ clearCache()
 
 module.exports = (client) => {}
 
-module.exports.addMoney = async (guildId, userId, money) => {
+module.exports.addMoney = async (guildId, userId, money, username) => {
     return await mongo().then(async (mongoose) => {
         try {
 
@@ -26,6 +26,7 @@ module.exports.addMoney = async (guildId, userId, money) => {
                 userId
             },{
                 userId,
+                username,
                 $inc: {
                     money
                 }
@@ -108,7 +109,7 @@ module.exports.getLevel = async (guildId, userId) => {
     })
 }
 
-module.exports.claimDaily = async (guildId, userId) => {
+module.exports.claimDaily = async (guildId, userId, username) => {
     return await mongo().then(async (mongoose) => {
         try {
             const result = await profileSchema.findOne({userId})
@@ -136,6 +137,7 @@ module.exports.claimDaily = async (guildId, userId) => {
                 userId
             },{
                 userId,
+                username,
                 $set: {
                     time: new Date(),
                     claimedFirstDaily: true
@@ -152,12 +154,11 @@ module.exports.claimDaily = async (guildId, userId) => {
     })
 }
 
-module.exports.sortByMoney = async (guildId, userId) => {
+module.exports.sortByMoney = async (listSize) => {
     return await mongo().then(async (mongoose) => {
         try {
-            profileSchema.find({}).sort({money: -1}).exec((err, docs) => {
-                
-            })  
+            return await profileSchema.find().sort({'money': -1})
+            //return result
         } finally {
             //mongoose.connection.close()
         }
