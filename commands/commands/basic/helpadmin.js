@@ -17,6 +17,9 @@ module.exports = {
                     name: 'kick <user>',
                     value: 'Kicks a user.'
                 },{
+                    name: 'setmoneypopup',
+                    value: 'Sets up the money pop up event for that channel.'
+                },{
                     name: 'clearchannel, cc',
                     value: 'Clears the current channel of all messages.'
                 },)

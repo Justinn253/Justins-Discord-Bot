@@ -34,7 +34,7 @@ module.exports = {
                 finalWaitTime = Math.round((hours + minutes) * 100) / 100
                 embed.setDescription(`❌  You must wait **${finalWaitTime} hours** to claim your daily again.`)
             } else {
-                finalWaitTime = minutes
+                finalWaitTime = waitTime
                 embed.setDescription(`❌  You must wait **${finalWaitTime} minutes** to claim your daily again.`)
             }
         }

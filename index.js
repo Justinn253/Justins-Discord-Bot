@@ -12,6 +12,7 @@ const loadCommands = require('./commands/load-commands')
 // const firstMessage = require('./first-message')
 // const privateMessage = require('./private-message')
 // const sendMessage = require('./send-message')
+const moneyPopup = require('./features/features/money-popup')
 const welcome = require('./features/features/welcome')
 const messageCount = require('./features/features/message-counter')
 const levels = require('./features/features/levels')
@@ -40,6 +41,9 @@ client.on('ready', async () => {
         }], 
             status: 'online'
     })
+
+    // Money Popup Event
+    moneyPopup(client)
 
     // Welcome
     welcome(client)

@@ -4,7 +4,7 @@ const economy = require('../../../features/features/economy')
 module.exports = {
     commands: ['rob'],
     description: 'Try to rob someone for some of their money.',
-    cooldown: 30,
+    cooldown: 60,
     minArgs: 1,
     maxArgs: 1,
     expectedArgs: "<Target's @>",
@@ -109,10 +109,10 @@ module.exports = {
 
             if (stealRoll < 8) {
                 // 10% - 24%
-                stealAmount = Math.round(targetMoney * (Math.ceil(Math.random() * (24 - 10) + 10) / 100)) 
+                stealAmount = Math.round(targetMoney * (Math.ceil(Math.random() * (15 - 5) + 5) / 100)) 
             } else  {
                 // 25 - 35%
-                stealAmount = Math.round(targetMoney * (Math.ceil(Math.random() * (24 - 10) + 10) / 100))
+                stealAmount = Math.round(targetMoney * (Math.ceil(Math.random() * (20 - 16) + 16) / 100))
             }
 
             embed.setColor('#00FF00')
@@ -182,6 +182,9 @@ module.exports = {
             if (stealAmount > maxStealAmount) {
                 console.log(`Error stealing - ${stealAmount} exceeds ${maxStealAmount}.`)
             } else {
+                if (stealAmount > 100000) {
+                    stealAmount = 100000
+                }
                 economy.addMoney(guildId, userId, stealAmount)
                 economy.addMoney(guildId, targetId, -stealAmount)
             }

@@ -82,7 +82,7 @@ module.exports = (client, commandOptions) => {
         for (const alias of commands) {
             const theCommand = content.split(" ")[0]
             //if (content.toLowerCase().startsWith(`${prefix}${alias.toLowerCase()}`)) {
-            if (theCommand == `${prefix}${alias.toLowerCase()}`) {    
+            if (theCommand.toLowerCase() == `${prefix}${alias.toLowerCase()}`) {    
 
 
                 // Ensure the user has the required permissions
