@@ -20,13 +20,21 @@ const profileSchema = mongoose.Schema({
         type: Number,
         default: 1
     },
-    time: {
+    dailyTime: {
         type: Date,
         default: Date.now
     },
     claimedFirstDaily: {
         type: Boolean,
         default: false
+    },
+    job: {
+        type: String,
+        default: 'none'
+    },
+    timeWorked: {
+        type: Date,
+        default: Date.now
     }
 })
 

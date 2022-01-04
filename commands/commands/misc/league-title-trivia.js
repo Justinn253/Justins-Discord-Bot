@@ -1,6 +1,7 @@
 const Discord = require('discord.js')
 const { floor, random } = Math
 const economy = require('../../../features/features/economy')
+const levels = require('../../../features/features/levels')
 
 module.exports = {
     commands: ['leaguetitle'],
@@ -64,6 +65,7 @@ module.exports = {
                 collector.stop()
                 answered = true
                 economy.addMoney(m.guild.id, m.author.id, moneyEarned)
+                levels.addXP(message.guild.id, message.member.id, 50, message, message.member.user.username)
                 return message.channel.send({embeds: [winnerEmbed]})
             }
         })

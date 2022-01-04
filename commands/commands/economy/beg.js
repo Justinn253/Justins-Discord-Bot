@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const economy = require('../../../features/features/economy')
+const levels = require('../../../features/features/levels')
 
 const { floor, random } = Math
 
@@ -116,6 +117,7 @@ module.exports = {
             }
         }
 
+        levels.addXP(message.guild.id, message.member.id, 100, message, message.member.user.username)
         message.channel.send({embeds: [embed]})
     }
 }

@@ -3,6 +3,7 @@ const command = require('../../util/commands')
 const Discord = require('discord.js')
 const moneyPopupSchema = require('../../schemas/money-popup-schema')
 const economy = require('./economy')
+const levels = require('./levels')
 
 const { floor, random } = Math
 
@@ -46,32 +47,41 @@ module.exports = (client) => {
     })
 
     client.on('messageCreate', async (message) => {
-        if (timerEnd <= new Date().getTime()) {
-            if (cache[message.guild.id] == undefined || cache[message.guild.id] == null) {
-                await mongo().then(async (mongoose) => {
-                    try {
-                        await moneyPopupSchema.findOneAndUpdate({
-                            _id: message.guild.id
-                        },{
-                            _id: message.guild.id,
-                            channelId: message.channel.id,
-                        },{
-                            upsert: true
-                        })
-                    } finally {
-                        //mongoose.connection.close()
-                    }
-                })
-
-                await mongo().then(async (mongoose) => {
-                    try { 
-                        const result = await moneyPopupSchema.findOne({_id: message.guild.id})
-                        cache[message.guild.id] = result.channelId
-                    } finally {
-                        //mongoose.connection.close()
-                    }
-                })
+        if (cache[message.guild.id] == undefined || cache[message.guild.id] == null) {
+            const result = await moneyPopupSchema.findOne({_id: message.guild.id})
+            if (result) {
+                cache[message.guild.id] = result.channelId
+            } else {
+                cache[message.guild.id] = 'none'
             }
+        }
+
+        if (timerEnd <= new Date().getTime()) {
+            // if (cache[message.guild.id] == undefined || cache[message.guild.id] == null) {
+            //     await mongo().then(async (mongoose) => {
+            //         try {
+            //             await moneyPopupSchema.findOneAndUpdate({
+            //                 _id: message.guild.id
+            //             },{
+            //                 _id: message.guild.id,
+            //                 channelId: message.channel.id,
+            //             },{
+            //                 upsert: true
+            //             })
+            //         } finally {
+            //             //mongoose.connection.close()
+            //         }
+            //     })
+
+            //     await mongo().then(async (mongoose) => {
+            //         try { 
+            //             const result = await moneyPopupSchema.findOne({_id: message.guild.id})
+            //             cache[message.guild.id] = result.channelId
+            //         } finally {
+            //             //mongoose.connection.close()
+            //         }
+            //     })
+            // }
 
             if (!message.author.bot && message.channel.id == cache[message.guild.id]) {
                 const roll = Math.ceil(Math.random() * 20)
@@ -117,6 +127,7 @@ module.exports = (client) => {
                             collector.stop()
                             answered = true
                             economy.addMoney(m.guild.id, m.author.id, 10000)
+                            levels.addXP(message.guild.id, message.member.id, 100, message, message.member.user.username)
                             return message.channel.send({embeds: [winnerEmbed]})
                         }
                     })

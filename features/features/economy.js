@@ -109,6 +109,40 @@ module.exports.getLevel = async (guildId, userId) => {
     })
 }
 
+module.exports.getExactLevel = async (guildId, userId) => {
+    const cachedValue = levelCache[`${userId}`]
+    if (cachedValue == 0 || cachedValue > 0 || cachedValue < 0) {
+        return cachedValue
+    }
+
+    return await mongo().then(async (mongoose) => {
+        try {
+
+            const result = await profileSchema.findOne({
+                userId
+            })
+
+            let level = 0
+            let xp = 0
+            if (result) {
+                if (result.level != null | result.xp) {
+                    level = result.level
+                    moneyCache[`${userId}`] = level
+                    xp = result.xp
+                    moneyCache[`${userId}`] = xp
+
+                    return result.level
+                } 
+            }
+
+            return '1 (0/5000)'
+
+        } finally {
+            //mongoose.connection.close()
+        }
+    })
+}
+
 module.exports.claimDaily = async (guildId, userId, username) => {
     return await mongo().then(async (mongoose) => {
         try {
@@ -119,7 +153,7 @@ module.exports.claimDaily = async (guildId, userId, username) => {
                 if (!result.claimedFirstDaily) {
                     canClaimDaily = true
                 } else {
-                    const then = new Date(result.time).getTime()
+                    const then = new Date(result.dailyTime).getTime()
                     const now = new Date().getTime()
 
                     const diffTime = Math.abs(now - then)
@@ -139,7 +173,7 @@ module.exports.claimDaily = async (guildId, userId, username) => {
                 userId,
                 username,
                 $set: {
-                    time: new Date(),
+                    dailyTime: new Date(),
                     claimedFirstDaily: true
                 }
             },{
@@ -159,6 +193,77 @@ module.exports.sortByMoney = async (listSize) => {
         try {
             return await profileSchema.find().sort({'money': -1})
             //return result
+        } finally {
+            //mongoose.connection.close()
+        }
+    })
+}
+
+module.exports.setJob = async (userId, username, job) => {
+    return await mongo().then(async (mongoose) => {
+        try {
+            await profileSchema.findOneAndUpdate({
+                userId
+            },{
+                userId,
+                username,
+                $set: {
+                    job, 
+                    timeWorked: new Date()
+                }
+            },{
+                upsert: true
+            })
+
+        } finally {
+            //mongoose.connection.close()
+        }
+    })
+}
+
+module.exports.getJob = async (userId) => {
+    return await mongo().then(async (mongoose) => {
+        try {
+            const result = await profileSchema.findOne({userId})
+            if (result.job) {
+                return result.job
+            } else {
+                return 'none'
+            }
+        } finally {
+            //mongoose.connection.close()
+        }
+    })
+}
+
+module.exports.claimJobPay = async (userId, username, pay) => {
+    return await mongo().then(async (mongoose) => {
+        try {
+            const result = await profileSchema.findOne({userId})
+
+            const then = new Date(result.timeWorked).getTime()
+            const now = new Date().getTime()
+
+            const diffTime = Math.abs(now - then)
+            const diffMins = diffTime / (1000 * 60)
+
+            const finalPay = Math.round(diffMins * pay)
+
+
+            await profileSchema.findOneAndUpdate({
+                userId
+            },{
+                userId,
+                username,
+                $set: {
+                    timeWorked: new Date(),
+                }
+            },{
+                upsert: true
+            })
+
+            return finalPay
+
         } finally {
             //mongoose.connection.close()
         }

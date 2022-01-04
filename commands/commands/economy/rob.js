@@ -1,5 +1,6 @@
 const Discord = require('discord.js')
 const economy = require('../../../features/features/economy')
+const levels = require('../../../features/features/levels')
 
 module.exports = {
     commands: ['rob'],
@@ -16,6 +17,8 @@ module.exports = {
         const guildId = message.guild.id
         const userMoney = await economy.getMoney(guildId, userId)
         const targetMoney = await economy.getMoney(guildId, targetId)
+        const userLevel = await economy.getExactLevel(guildId, userId)
+        const userMaxStealAmount = userLevel * 10000
 
         if (userMoney < 500) {
             message.reply('You need $500 or more to rob someone.')
@@ -105,14 +108,20 @@ module.exports = {
             // Success - Steal a variable amount of money. Does not exceed 35% of targets money.
             const stealRoll = Math.ceil(Math.random() * 10)
             let stealAmount = 0
-            const maxStealAmount = targetMoney * 0.35
+            const maxStealAmount = targetMoney * 0.1
 
             if (stealRoll < 8) {
                 // 10% - 24%
-                stealAmount = Math.round(targetMoney * (Math.ceil(Math.random() * (15 - 5) + 5) / 100)) 
+                stealAmount = Math.round(targetMoney * (Math.ceil(Math.random() * 5) / 100)) 
+                if (stealAmount > userMaxStealAmount) {
+                    stealAmount = userMaxStealAmount
+                }
             } else  {
                 // 25 - 35%
-                stealAmount = Math.round(targetMoney * (Math.ceil(Math.random() * (20 - 16) + 16) / 100))
+                stealAmount = Math.round(targetMoney * (Math.ceil(Math.random() * 10) / 100))
+                if (stealAmount > userMaxStealAmount) {
+                    stealAmount = userMaxStealAmount
+                }
             }
 
             embed.setColor('#00FF00')
@@ -182,11 +191,9 @@ module.exports = {
             if (stealAmount > maxStealAmount) {
                 console.log(`Error stealing - ${stealAmount} exceeds ${maxStealAmount}.`)
             } else {
-                if (stealAmount > 100000) {
-                    stealAmount = 100000
-                }
                 economy.addMoney(guildId, userId, stealAmount)
                 economy.addMoney(guildId, targetId, -stealAmount)
+                levels.addXP(message.guild.id, message.member.id, 350, message, message.member.user.username)
             }
         }
 

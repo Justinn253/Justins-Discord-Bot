@@ -1,4 +1,5 @@
 const economy = require('../../../features/features/economy')
+const levels = require('../../../features/features/levels')
 
 const { floor, random } = Math
 
@@ -36,6 +37,7 @@ module.exports = {
                 const multiplier = Math.floor(Math.random() * (15 - 5) + 5) / 10 
                 winLossAmount = Math.round(gambleAmount * multiplier)
                 const newMoney = await economy.addMoney(guildId, userId, winLossAmount) 
+                levels.addXP(message.guild.id, message.member.id, 250, message, message.member.user.username)
                 message.reply(`You won $${winLossAmount} with a multiplier of ${multiplier}! You now have $${newMoney}!`)
             } else {
                 // Loss

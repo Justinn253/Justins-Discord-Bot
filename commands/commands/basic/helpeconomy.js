@@ -34,7 +34,16 @@ module.exports = {
                 },{
                     name: 'rob <user>',
                     value: 'Attempts to rob someone for some of their money.'
-                },)
+                },{
+                    name: 'setjob <job>',
+                    value: 'Set a job to earn passive income.'
+                },{
+                    name: 'paycheck',
+                    value: 'Claim the pay from your job.'
+                },{
+                    name: 'viewjobs',
+                    value: 'View the list of jobs'
+                })
 
         message.channel.send({embeds: [embed]})
     }
