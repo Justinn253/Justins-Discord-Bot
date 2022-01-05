@@ -2,16 +2,15 @@ const Discord = require('discord.js')
 
 module.exports = {
     commands: ['economy'],
-    description: 'Displays bot commands in the "economy" category.',
     cooldown: 10,
-    callback: (message, arguments, text) => {
+    callback: (message) => {
 
         const embed = new Discord.MessageEmbed()
                 .setTitle('__Economy Commands__')
                 .setColor('#FF0000')
                 .setThumbnail('https://cdn.discordapp.com/attachments/924054502607314965/925138866355179570/theDog12.png')
                 .setFields({
-                    name: 'balance <user>, bal <user>',
+                    name: 'balance, bal <user>',
                     value: 'Displays your balance or another persons balance.'
                 },{
                     name: 'beg',
@@ -20,16 +19,16 @@ module.exports = {
                     name: 'daily',
                     value: 'Claims your daily rewards.'
                 },{
-                    name: 'baltop',
+                    name: 'baltop, lb, leaderboard, top, richest',
                     value: 'See the global balance leaderboard.'
                 },{
                     name: 'gamble <amount>',
                     value: 'Gambles a specified amount of money (40/60 odds).'
                 },{
-                    name: 'level <user>, xp <user>',
+                    name: 'level, xp <user>',
                     value: 'Displays your level or another persons level.'
                 },{
-                    name: 'pay <user> <amount>',
+                    name: 'pay, give, loan <user> <amount>',
                     value: 'Pays a user a specified amount of your money.'
                 },{
                     name: 'rob <user>',
@@ -41,7 +40,7 @@ module.exports = {
                     name: 'paycheck',
                     value: 'Claim the pay from your job.'
                 },{
-                    name: 'viewjobs',
+                    name: 'viewjobs, joblist, jobs',
                     value: 'View the list of jobs'
                 })
 

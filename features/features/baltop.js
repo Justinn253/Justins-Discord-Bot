@@ -1,10 +1,8 @@
-const economy = require('./economy.js')
-
 const mongo = require('../../util/mongo')
 const baltopSchema = require('../../schemas/baltop-schema')
 
 module.exports.setLeaderboard = async (leaderboardList) => {
-    return await mongo().then(async mongoose => {
+    return await mongo().then(async (mongoose) => {
         try {
             baltopSchema.remove({})
             const topList = []

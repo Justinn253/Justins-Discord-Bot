@@ -1,13 +1,11 @@
 const Discord = require('discord.js')
-const { floor, random } = Math
 
 module.exports = {
     commands: ['8ball'],
-    description: 'See if something is true or not.',
     cooldown: 3,
     minArgs: 1,
     expectedArgs: "<message>",
-    callback: (message, arguments, text) => {
+    callback: (message, arguments) => {
         for (i = 0; i < arguments.length; i++) {
             if (arguments[i].startsWith('<@')) {
                 const tagId = arguments[i].substring(2, arguments[i].length-1)
@@ -19,6 +17,7 @@ module.exports = {
         embed.setColor('#9370DB')
         const roll = Math.ceil(Math.random() * 3)
 
+        // TODO
         if (roll == 1) {
             embed.setDescription('No')
         } else if (roll == 2) {

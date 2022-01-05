@@ -1,12 +1,9 @@
-const { floor, random } = Math
-
 module.exports = {
     commands: ['pp', 'weiner', 'peen'],
-    description: 'Check your size.',
     cooldown: 3,
     maxArgs: 1,
     expectedArgs: '<user>',
-    callback: (message, arguments, text) => {
+    callback: (message) => {
         const target = message.mentions.users.first() || message.author
         const length = Math.round(Math.random() * 15)
         let stick = '8'

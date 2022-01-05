@@ -2,13 +2,12 @@ const Discord = require('discord.js')
 
 module.exports = {
     commands: ['serverinfo', 'si'],
-    description: 'Displays basic information about the server.',
     cooldown: 20,
-    callback: (message, arguments, text) => {
+    callback: (message) => {
         const { guild } = message
 
         const { name, memberCount, preferredLocale, 
-                createdAt, verified, banner, afkTimeout } = guild
+                createdAt, verified, afkTimeout } = guild
         const icon = guild.iconURL()
 
         const embed = new Discord.MessageEmbed()

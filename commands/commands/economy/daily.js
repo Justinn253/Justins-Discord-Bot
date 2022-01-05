@@ -3,9 +3,8 @@ const economy = require('../../../features/features/economy')
 
 module.exports = {
     commands: ['daily'],
-    description: 'Claims your daily reward.',
     cooldown: 1,
-    callback: async (message, arguments) => {
+    callback: async (message) => {
         const guildId = message.guild.id
         const userId = message.author.id
         const embed = new Discord.MessageEmbed()

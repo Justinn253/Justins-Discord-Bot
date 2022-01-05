@@ -2,9 +2,8 @@ const Discord = require('discord.js')
 
 module.exports = {
     commands: ['misc'],
-    description: 'Displays bot commands in the "misc" category',
     cooldown: 10,
-    callback: (message, arguments, text) => {
+    callback: (message) => {
 
         const embed = new Discord.MessageEmbed()
                 .setTitle('__Misc Commands__')
@@ -14,22 +13,16 @@ module.exports = {
                     name: 'ping',
                     value: '"Pong" (useful) for seeing if the bot is responding.'
                 },{
-                    name: 'pp <user>, weiner <user>, peen <user>',
+                    name: 'pp, weiner, peen <user>',
                     value: 'Check your size.'
-                },{
-                    name: 'nobitches <user>',
-                    value: 'YOU GET NO BITCHES'
                 },{
                     name: '8ball',
                     value: 'See if something is true or not.'
                 },{
-                    name: 'gigachad',
-                    value: 'Show them whos the real shrigma.'
-                },{
-                    name: 'leagueult',
+                    name: 'leagueult, lu',
                     value: 'Trivia game - Guess the league champion based on their ultimate name.'
                 },{
-                    name: 'leaguetitle',
+                    name: 'leaguetitle, lt',
                     value: 'Trivia game - Guess the league champion based on their title.'
                 })
 

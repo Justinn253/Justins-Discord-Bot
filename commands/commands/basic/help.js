@@ -1,12 +1,9 @@
 const Discord = require('discord.js')
-const loadCommands = require('../../load-commands.js')
-const { prefix } = require('../../../config.json')
 
 module.exports = {
     commands: ['help'],
-    description: 'Displays bot commands',
     cooldown: 10,
-    callback: (message, arguments, text) => {
+    callback: (message) => {
         //const commands = loadCommands()
 
         const embed = new Discord.MessageEmbed()
@@ -17,8 +14,11 @@ module.exports = {
                     name: 'help',
                     value: 'Displays the help menu.'
                 },{
-                    name: 'basic',
-                    value: 'Displays commands in the "basic" category.'
+                    name: 'music',
+                    value: 'Displays commands in the "music" category.'
+                },{
+                    name: 'random',
+                    value: 'Displays commands in the "random" category.'
                 },{
                     name: 'economy',
                     value: 'Displays commands in the "economy" category.'

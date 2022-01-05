@@ -2,7 +2,6 @@ module.exports = {
     commands: ['ban'],
     description: '(ADMIN) Bans a user',
     expectedArgs: '<user>',
-    permissionError: 'You need admin permission to run this command',
     minArgs: 1,
     maxArgs: 1,
     callback: (message, arguments, text) => {

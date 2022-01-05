@@ -1,16 +1,13 @@
 const Discord = require('discord.js')
 
-const { floor, random } = Math
-
 module.exports = {
     commands: ['randompic'],
-    description: 'Generates a random link to prnt.sc for random pictures.',
-    cooldown: 3,
-    callback: (message, arguments, text) => {
+    cooldown: 2,
+    callback: (message) => {
         const characters = 'abcdefghijklmnopqrstuvwxyz0123456789'.split('')
         let id = '';
-        for (let i=0; i<4; ++i) id += characters[floor(random()*characters.length)]
-        for (let i=0; i<2; ++i) id += floor(random()*9)
+        for (let i=0; i<4; ++i) id += characters[Math.floor(Math.random() * characters.length)]
+        for (let i=0; i<2; ++i) id += Math.random(Math.random() * 9)
         let png = '.png'
 
         const embed = new Discord.MessageEmbed()

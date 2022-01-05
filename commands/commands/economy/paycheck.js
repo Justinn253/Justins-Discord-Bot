@@ -1,12 +1,10 @@
 const Discord = require('discord.js')
 const economy = require('../../../features/features/economy')
-const bTop = require('../../../features/features/baltop')
 
 module.exports = {
     commands: ['paycheck'],
-    description: 'Claim your paycheck from your job.',
     cooldown: 180,
-    callback: async (message, arguments, text) => {
+    callback: async (message) => {
         const userId = message.author.id
         const currentJob = await economy.getJob(userId)
 
@@ -22,6 +20,7 @@ module.exports = {
                     .setColor('#C0C0C0')
                 message.channel.send({embeds: [embed]})
             } else {
+                await economy.addMoney(message.guild.id, userId, pay)
                 const embed = new Discord.MessageEmbed()
                     .setTitle('-- Jobs --')
                     .setDescription(`You have been paid $${pay}.`)

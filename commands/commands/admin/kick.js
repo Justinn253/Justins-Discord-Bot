@@ -1,6 +1,5 @@
 module.exports = {
     commands: ['ban'],
-    description: '(ADMIN) Kicks a member.',
     expectedArgs: '<user>',
     permissionError: 'You need admin permission to run this command',
     minArgs: 1,

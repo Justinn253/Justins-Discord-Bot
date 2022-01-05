@@ -2,9 +2,8 @@ const Discord = require('discord.js')
 
 module.exports = {
     commands: ['admin'],
-    description: 'Displays bot commands in the "admin" category',
     cooldown: 10,
-    callback: (message, arguments, text) => {
+    callback: (message) => {
 
         const embed = new Discord.MessageEmbed()
                 .setTitle('__Admin Commands__')

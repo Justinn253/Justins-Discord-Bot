@@ -5,8 +5,6 @@ const moneyPopupSchema = require('../../schemas/money-popup-schema')
 const economy = require('./economy')
 const levels = require('./levels')
 
-const { floor, random } = Math
-
 module.exports = (client) => {
     const cache = {}
     let timerEnd = 0
@@ -57,34 +55,10 @@ module.exports = (client) => {
         }
 
         if (timerEnd <= new Date().getTime()) {
-            // if (cache[message.guild.id] == undefined || cache[message.guild.id] == null) {
-            //     await mongo().then(async (mongoose) => {
-            //         try {
-            //             await moneyPopupSchema.findOneAndUpdate({
-            //                 _id: message.guild.id
-            //             },{
-            //                 _id: message.guild.id,
-            //                 channelId: message.channel.id,
-            //             },{
-            //                 upsert: true
-            //             })
-            //         } finally {
-            //             //mongoose.connection.close()
-            //         }
-            //     })
 
-            //     await mongo().then(async (mongoose) => {
-            //         try { 
-            //             const result = await moneyPopupSchema.findOne({_id: message.guild.id})
-            //             cache[message.guild.id] = result.channelId
-            //         } finally {
-            //             //mongoose.connection.close()
-            //         }
-            //     })
-            // }
 
             if (!message.author.bot && message.channel.id == cache[message.guild.id]) {
-                const roll = Math.ceil(Math.random() * 20)
+                const roll = Math.ceil(Math.random() * 30)
 
                 if (roll == 1) {
                     const words = ['money', 'dollars', 'bank', 'rich']

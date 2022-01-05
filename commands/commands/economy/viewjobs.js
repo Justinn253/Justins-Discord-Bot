@@ -1,12 +1,9 @@
 const Discord = require('discord.js')
-const economy = require('../../../features/features/economy')
-const bTop = require('../../../features/features/baltop')
 
 module.exports = {
-    commands: ['viewjobs'],
-    description: 'View the list of jobs.',
+    commands: ['viewjobs', 'joblist', 'jobs'],
     cooldown: 5,
-    callback: async (message, arguments, text) => {
+    callback: async (message) => {
         const embed = new Discord.MessageEmbed()
             .setTitle('-- Jobs --')
             .setDescription(`**Choose a job from the list below:**

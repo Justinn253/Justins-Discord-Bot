@@ -1,13 +1,11 @@
 const Discord = require('discord.js')
-const { floor, random } = Math
 const economy = require('../../../features/features/economy')
 const levels = require('../../../features/features/levels')
 
 module.exports = {
-    commands: ['leagueult'],
-    description: 'Try to match the league champion with their ultimate name.',
+    commands: ['leagueult', 'lu'],
     cooldown: 3,
-    callback: async (message, arguments, text, client) => {
+    callback: async (message) => {
         const triviaMap = new Map()
         const selection = Math.ceil(Math.random() * 14)
         createTriviaMap(triviaMap, selection)
@@ -64,8 +62,8 @@ module.exports = {
                     .setColor('#2E5EC6')
                 collector.stop()
                 answered = true
-                economy.addMoney(m.guild.id, m.author.id, moneyEarned)
-                levels.addXP(message.guild.id, message.member.id, 50, message, message.member.user.username)
+                await economy.addMoney(m.guild.id, m.author.id, moneyEarned)
+                await levels.addXP(message.guild.id, message.member.id, 50, message, message.member.user.username)
                 return message.channel.send({embeds: [winnerEmbed]})
             }
         })

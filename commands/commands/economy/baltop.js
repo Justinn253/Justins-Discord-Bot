@@ -3,8 +3,7 @@ const economy = require('../../../features/features/economy')
 const bTop = require('../../../features/features/baltop')
 
 module.exports = {
-    commands: ['baltop'],
-    description: 'Displays the balance leaderboard for this server.',
+    commands: ['baltop', 'lb', 'leaderboard', 'top', 'richest'],
     cooldown: 10,
     maxArgs: 1,
     expectedArgs: '<list_size>',

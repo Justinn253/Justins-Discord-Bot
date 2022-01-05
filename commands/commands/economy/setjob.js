@@ -1,14 +1,12 @@
 const Discord = require('discord.js')
 const economy = require('../../../features/features/economy')
-const bTop = require('../../../features/features/baltop')
 
 module.exports = {
     commands: ['setjob'],
-    description: 'Set a job to earn passive income.',
-    cooldown: 30,
+    cooldown: 10,
     maxArgs: 1,
     expectedArgs: '<job>',
-    callback: async (message, arguments, text) => {
+    callback: async (message, arguments) => {
         const userId = message.author.id
         const currentJob = await economy.getJob(userId)
 
@@ -19,7 +17,7 @@ module.exports = {
         if (currentJob.toLowerCase() == arguments[0].toLowerCase()) {
             const setJobEmbed = new Discord.MessageEmbed()
                 .setTitle('-- Jobs --')
-                .setDescription(`You are already set as ${arguments[0]}`)
+                .setDescription(`You are already set as **${arguments[0]}**`)
                 .setColor('#C0C0C0')
             message.channel.send({embeds: [setJobEmbed]})
             return
@@ -43,7 +41,7 @@ module.exports = {
                 const pay = await economy.claimJobPay(userId, message.author.username, cJob[1])
                 const embed = new Discord.MessageEmbed()
                     .setTitle('-- Jobs --')
-                    .setDescription(`You have been paid $${pay}.`)
+                    .setDescription(`You have been paid $${pay} for your previous job.`)
                     .setColor('#C0C0C0')
                 message.channel.send({embeds: [embed]})
             }
@@ -56,7 +54,7 @@ module.exports = {
         } else {
             const setJobEmbed = new Discord.MessageEmbed()
                 .setTitle('-- Jobs --')
-                .setDescription(`You are too low of a level to be a ${job[0]}`)
+                .setDescription(`You are too low of a level to be **${job[0]}**`)
                 .setColor('#C0C0C0')
             message.channel.send({embeds: [setJobEmbed]})
         }

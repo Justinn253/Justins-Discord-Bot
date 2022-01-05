@@ -3,7 +3,6 @@ const economy = require('../../../features/features/economy')
 
 module.exports = {
     commands: ['battle'],
-    description: 'Start a battle game.',
     cooldown: 30,
     minArgs: 1,
     expectedArgs: "<user>, <user>, ...",

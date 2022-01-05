@@ -1,9 +1,5 @@
 const mongo = require('../../util/mongo')
 const profileSchema = require('../../schemas/profile-schema')
-const messageCounter = require('./message-counter')
-const { now } = require('mongoose')
-const { db } = require('../../schemas/profile-schema')
-const { round } = Math
 
 const moneyCache = {} // { 'guildId-userId': money }
 const levelCache = {}
@@ -149,6 +145,7 @@ module.exports.claimDaily = async (guildId, userId, username) => {
             const result = await profileSchema.findOne({userId})
 
             canClaimDaily = false
+            let claimResult = [canClaimDaily, 0]
             if (result) {
                 if (!result.claimedFirstDaily) {
                     canClaimDaily = true
@@ -160,7 +157,7 @@ module.exports.claimDaily = async (guildId, userId, username) => {
                     const diffDays = diffTime / (1000 * 60 * 60 * 24)
 
                     if (diffDays <= 1) {
-                        return [false, Math.round(1440 - (diffTime / (1000 * 60)))]
+                        claimResult = [false, Math.round(1440 - (diffTime / (1000 * 60)))]
                     } else {
                         canClaimDaily = true
                     }
@@ -180,7 +177,12 @@ module.exports.claimDaily = async (guildId, userId, username) => {
                 upsert: true
             })
 
-            return [canClaimDaily, 0]
+            console.log(claimResult)
+            if (claimResult[0] == false) {
+                return claimResult
+            } else {
+                return [canClaimDaily, 0]
+            }
 
         } finally {
             //mongoose.connection.close()

@@ -2,9 +2,8 @@ const Discord = require('discord.js')
 
 module.exports = {
     commands: ['thedog'],
-    description: 'My companions',
-    cooldown: 5,
-    callback: (message, arguments, text) => {
+    cooldown: 2,
+    callback: (message) => {
         const dogs = ['https://cdn.discordapp.com/attachments/923692313149075486/927802508045324298/theDog.png',
                       'https://cdn.discordapp.com/attachments/923692313149075486/927802508288606239/theDog2.jpg',
                       'https://cdn.discordapp.com/attachments/923692313149075486/927802508489941043/theDog3.png',
@@ -25,7 +24,7 @@ module.exports = {
 
         const roll = Math.floor(Math.random() * 16)
         const embed = new Discord.MessageEmbed()
-            .setTitle('A member of the dogs.')
+            .setTitle(`Introducing The Dog ${roll + 1}`)
             .setImage(dogs[roll])
 
             message.channel.send({embeds: [embed]})

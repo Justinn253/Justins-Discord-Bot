@@ -4,12 +4,11 @@ const levels = require('../../../features/features/levels')
 
 module.exports = {
     commands: ['rob'],
-    description: 'Try to rob someone for some of their money.',
     cooldown: 60,
     minArgs: 1,
     maxArgs: 1,
     expectedArgs: "<Target's @>",
-    callback: async (message, arguments) => {
+    callback: async (message) => {
         const userTag = message.author.username
         const targetTag = message.mentions.users.first().username
         const userId = message.author.id
@@ -191,9 +190,9 @@ module.exports = {
             if (stealAmount > maxStealAmount) {
                 console.log(`Error stealing - ${stealAmount} exceeds ${maxStealAmount}.`)
             } else {
-                economy.addMoney(guildId, userId, stealAmount)
-                economy.addMoney(guildId, targetId, -stealAmount)
-                levels.addXP(message.guild.id, message.member.id, 350, message, message.member.user.username)
+                await economy.addMoney(guildId, userId, stealAmount)
+                await economy.addMoney(guildId, targetId, -stealAmount)
+                await levels.addXP(message.guild.id, message.member.id, 350, message, message.member.user.username)
             }
         }
 

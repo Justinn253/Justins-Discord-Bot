@@ -1,8 +1,7 @@
 const economy = require('../../../features/features/economy')
 
 module.exports = {
-    commands: ['pay'],
-    description: 'Gives a person a specified amount of your money.',
+    commands: ['pay', 'give', 'loan'],
     cooldown: 3,
     minArgs: 2,
     maxArgs: 2,
@@ -34,9 +33,9 @@ module.exports = {
         if (senderBalance < money) {
             message.reply('You do not have enough money')
         } else {
-            const newMoney1 = await economy.addMoney(guildId, senderUserId, -Math.abs(money))
+            await economy.addMoney(guildId, senderUserId, -Math.abs(money))
             const newMoney2 = await economy.addMoney(guildId, receiverUserId, money) 
-            message.reply(`You have given <@${receiverUserId}> $${money}. They now have $${newMoney2}.`)
+            message.reply(`${message.author.username} has paid ${mention.username} **$${money}**. They now have **$${newMoney2}**.`)
         }
     }
 }
