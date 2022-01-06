@@ -9,6 +9,11 @@ module.exports = {
     callback: async (message) => {
         const target = message.mentions.users.first() || message.author
 
+        if (target.bot) {
+            message.reply('Why would you think a bot has money?? Are you trying to rob a helpless being??')
+            return
+        }
+
         const guildId = message.guild.id
         const userId = target.id
 

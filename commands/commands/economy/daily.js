@@ -13,9 +13,9 @@ module.exports = {
         canClaim = await economy.claimDaily(guildId, userId)
         if (canClaim[0]) {
             embed.setTitle('-- DAILY --')
-            .setDescription('💰  You have claimed your daily and earned $2000!')
+            .setDescription('💰  You have claimed your daily and earned $10000!')
             .setColor('#00FF00')
-            await economy.addMoney(guildId, userId, 2000) 
+            await economy.addMoney(guildId, userId, 10000) 
         } else {
             embed.setTitle('-- DAILY --')
             .setColor('#FF0000')

@@ -30,6 +30,11 @@ module.exports = {
         const receiverUserId = mention.id
         const senderBalance = await economy.getMoney(guildId, senderUserId)
 
+        if (mention.bot) {
+            message.reply(`You have paid ${mention.username} **$${senderBalance}**! You now have **$0**. Pranked, you can't rob bots!`)
+            return
+        }
+
         if (senderBalance < money) {
             message.reply('You do not have enough money')
         } else {

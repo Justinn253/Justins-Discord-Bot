@@ -12,7 +12,7 @@ module.exports = {
         let voiceChannel
         const guildId = message.guild.id
 
-        if (message.channel.voice.channel != null && message.channel.voice.channel != undefined) {
+        if (message.member.voice.channel != null && message.member.voice.channel != undefined) {
             voiceChannel = message.member.voice.channel.id
         } else {
             return message.channel.send('You need to be in a voice channel to use this command.')
@@ -21,12 +21,6 @@ module.exports = {
         if (voiceChannel == undefined || voiceChannel == null) {
             return message.channel.send('You need to be in a voice channel to use this command.')
         }
-
-        // const videoFinder = async (query) => {
-        //     const videoResult = await ytSearch(query)
-
-        //     return (videoResult.videos.length > 1) ? videoResult.videos[0] : null
-        // }
 
         let theQueue = await musicQueue.getQueue(guildId)
         if (theQueue.length == 0) {

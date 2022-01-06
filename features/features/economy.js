@@ -147,42 +147,46 @@ module.exports.claimDaily = async (guildId, userId, username) => {
             canClaimDaily = false
             let claimResult = [canClaimDaily, 0]
             if (result) {
+                console.log('test 1', claimResult)
                 if (!result.claimedFirstDaily) {
                     canClaimDaily = true
+                    claimResult = [true, 0]
+                    console.log('test 2', claimResult)
                 } else {
                     const then = new Date(result.dailyTime).getTime()
                     const now = new Date().getTime()
 
                     const diffTime = Math.abs(now - then)
                     const diffDays = diffTime / (1000 * 60 * 60 * 24)
+                    console.log(result.dailyTime.getTime(), then, now, diffTime, diffDays)
 
                     if (diffDays <= 1) {
                         claimResult = [false, Math.round(1440 - (diffTime / (1000 * 60)))]
+                        console.log('test 3', claimResult)
                     } else {
-                        canClaimDaily = true
+                        claimResult = [true, 0]
+                        console.log('test 4', claimResult)
                     }
                 }
             }
 
-            await profileSchema.findOneAndUpdate({
-                userId
-            },{
-                userId,
-                username,
-                $set: {
-                    dailyTime: new Date(),
-                    claimedFirstDaily: true
-                }
-            },{
-                upsert: true
-            })
+            if (claimResult[0] == true) {
+                await profileSchema.findOneAndUpdate({
+                    userId
+                },{
+                    userId,
+                    username,
+                    $set: {
+                        dailyTime: new Date(),
+                        claimedFirstDaily: true
+                    }
+                },{
+                    upsert: true
+                })
+            }
 
             console.log(claimResult)
-            if (claimResult[0] == false) {
-                return claimResult
-            } else {
-                return [canClaimDaily, 0]
-            }
+            return claimResult
 
         } finally {
             //mongoose.connection.close()

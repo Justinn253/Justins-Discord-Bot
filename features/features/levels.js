@@ -7,7 +7,9 @@ module.exports = (client) => {
     client.on('messageCreate', message => {
         const { guild, member } = message
 
-        addXP(guild.id, member.id, 50, message, member.user.username)
+        if (!message.author.bot) {
+            addXP(guild.id, member.id, 50, message, member.user.username)
+        }
     })
 }
 
@@ -36,11 +38,11 @@ const addXP = async (guildId, userId, xpToAdd, message, username) => {
                 level++
                 xp -= needed
 
-                if (!message.author == '923317732659826738') {
-                    message.author.send(`You are now level ${level} and received $3000!`)
+                if (message.author != '923317732659826738') {
+                    message.author.send(`You are now level ${level} and received $10000!`)
                 }
 
-                await economy.addMoney(guildId, userId, 2000, username) 
+                await economy.addMoney(guildId, userId, 10000, username) 
 
                 await profileSchema.updateOne({
                     userId

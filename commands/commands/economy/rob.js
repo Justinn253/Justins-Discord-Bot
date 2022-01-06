@@ -19,6 +19,11 @@ module.exports = {
         const userLevel = await economy.getExactLevel(guildId, userId)
         const userMaxStealAmount = userLevel * 10000
 
+        if (message.mentions.users.first().bot) {
+            message.reply(`Why would you want to rob a helpless bot?? You are EVIL!`)
+            return
+        }
+
         if (userMoney < 500) {
             message.reply('You need $500 or more to rob someone.')
             return
