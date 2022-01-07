@@ -144,12 +144,10 @@ module.exports.claimDaily = async (guildId, userId, username) => {
         try {
             const result = await profileSchema.findOne({userId})
 
-            canClaimDaily = false
-            let claimResult = [canClaimDaily, 0]
+            let claimResult = [false, 0]
             if (result) {
                 console.log('test 1', claimResult)
                 if (!result.claimedFirstDaily) {
-                    canClaimDaily = true
                     claimResult = [true, 0]
                     console.log('test 2', claimResult)
                 } else {
