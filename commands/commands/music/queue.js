@@ -4,7 +4,7 @@ const Discord = require('discord.js')
 module.exports = {
     commands: ['queue'],
     cooldown: 3,
-    callback: async (message, arguments) => {
+    callback: async (message) => {
         const queue = await musicQueue.getQueue(message.guild.id)
         const queueLength = await musicQueue.getQueueLength(message.guild.id)
         const embed = new Discord.MessageEmbed()

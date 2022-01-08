@@ -254,5 +254,6 @@ function createTriviaMap(triviaMap, selection) {
         triviaMap.set('The Chronokeeper', 'Zilean')
         triviaMap.set('The Aspect of Twilight', 'Zoe')
         triviaMap.set('Rise of the Thorns', 'Zyra')
+        triviaMap.set('The Spark of Zaun', 'Zeri')
     }
 }

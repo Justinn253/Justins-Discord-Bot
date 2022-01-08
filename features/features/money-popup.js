@@ -55,8 +55,6 @@ module.exports = (client) => {
         }
 
         if (timerEnd <= new Date().getTime()) {
-
-
             if (!message.author.bot && message.channel.id == cache[message.guild.id]) {
                 const roll = Math.ceil(Math.random() * 30)
 

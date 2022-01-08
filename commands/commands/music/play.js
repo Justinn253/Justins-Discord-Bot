@@ -1,6 +1,7 @@
 const ytdl = require('ytdl-core')
 const ytSearch = require('yt-search')
 const DiscordVoice = require('@discordjs/voice')
+const Discord = require('discord.js')
 const musicQueue = require('../../../features/features/music-queue')
 
 module.exports = {
@@ -37,6 +38,10 @@ module.exports = {
             if (video) {
                 const theQueue = await musicQueue.addToQueue(video, guildId)
                 message.channel.send(`**${video.title}** has been added to queue position **(${theQueue.length})**`)
+                const connection = DiscordVoice.getVoiceConnection(message.guild.id)
+                if (!connection) {
+                    playSong(theQueue[0], guildId, voiceChannel, message)
+                }
             } else {
                 message.channel.send('No video results found.')
             }
@@ -50,7 +55,8 @@ async function videoFinder(query) {
     return (videoResult.videos.length > 1) ? videoResult.videos[0] : null
 }
 
-async function playSong(video, guildId, voiceChannel, message) {
+async function playSong(video, guildId, voiceChannel, message)  {
+    const embed = new Discord.MessageEmbed()
 
     const stream = ytdl(video.url, {
         filter: 'audioonly',
@@ -60,6 +66,7 @@ async function playSong(video, guildId, voiceChannel, message) {
 
     const player = DiscordVoice.createAudioPlayer()
     const resource = DiscordVoice.createAudioResource(stream)
+
 
     const connection = await DiscordVoice.joinVoiceChannel({
         channelId: voiceChannel,
@@ -83,5 +90,33 @@ async function playSong(video, guildId, voiceChannel, message) {
         }
     })
 
-    await message.channel.send(` :thumbsup: Now Playing **${video.title}**`)
+
+
+    const filter = (m) => {
+        !m.author.bot,
+        m.author.id == message.author.id
+    }
+
+    const collector = new Discord.MessageCollector(message.channel, filter)
+
+    let answered = false
+
+    collector.on('collect', async (m) => {
+        if (m.content.toLowerCase() == '+skip') {
+            collector.stop()
+            player.stop()
+        }
+    })
+
+
+
+
+    embed.setDescription(`:thumbsup: Now Playing **${video.title}**`)
+    message.channel.send({embeds: [embed]})
 } 
+
+module.exports.skipSong = async (guildId) => {
+    const theQueue = await musicQueue.getQueue(guildId)
+    const voiceChannel = message.member.voice.channel.id
+    playSong(theQueue[0], guildId, voiceChannel, message)
+}

@@ -254,5 +254,6 @@ function createTriviaMap(triviaMap, selection) {
         triviaMap.set('Chronoshift', 'Zilean')
         triviaMap.set('Portal Jump', 'Zoe')
         triviaMap.set('Stranglethorns', 'Zyra')
+        triviaMap.set('Lightning Crash', 'Zeri')
     }
 }
