@@ -6,12 +6,13 @@ module.exports = {
     commands: ['leave'],
     cooldown: 3,
     callback: async (message) => {
+        const guildId = message.guild.id
         const connection = DiscordVoice.getVoiceConnection(message.guild.id)
         const embed = new Discord.MessageEmbed()
 
         if (connection) {
             connection.destroy()
-            musicQueue.clearQueue(guildId)
+            await musicQueue.clearQueue(guildId)
             embed.setDescription('Now leaving the voice channel.')
         } else {
             embed.setDescription('I am not connected to any voice channels.')

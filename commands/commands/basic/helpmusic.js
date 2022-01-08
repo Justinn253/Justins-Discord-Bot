@@ -13,6 +13,9 @@ module.exports = {
                     name: 'play, p <url> OR <keywords>',
                     value: 'Play a song or put a song in the queue.'
                 },{
+                    name: 'skip',
+                    value: 'Skips the current song in the queue.'
+                },{
                     name: 'queue',
                     value: 'See the current queue.'
                 },{
