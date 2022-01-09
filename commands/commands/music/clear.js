@@ -2,7 +2,7 @@ const Discord = require('discord.js')
 const musicQueue = require('../../../features/features/music-queue')
 
 module.exports = {
-    commands: ['clearqueue'],
+    commands: ['clear'],
     cooldown: 3,
     callback: async (message) => {
         const embed = new Discord.MessageEmbed()

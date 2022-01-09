@@ -146,24 +146,19 @@ module.exports.claimDaily = async (guildId, userId, username) => {
 
             let claimResult = [false, 0]
             if (result) {
-                console.log('test 1', claimResult)
                 if (!result.claimedFirstDaily) {
                     claimResult = [true, 0]
-                    console.log('test 2', claimResult)
                 } else {
                     const then = new Date(result.dailyTime).getTime()
                     const now = new Date().getTime()
 
                     const diffTime = Math.abs(now - then)
                     const diffDays = diffTime / (1000 * 60 * 60 * 24)
-                    console.log(result.dailyTime.getTime(), then, now, diffTime, diffDays)
 
                     if (diffDays <= 1) {
                         claimResult = [false, Math.round(1440 - (diffTime / (1000 * 60)))]
-                        console.log('test 3', claimResult)
                     } else {
                         claimResult = [true, 0]
-                        console.log('test 4', claimResult)
                     }
                 }
             }
@@ -182,8 +177,6 @@ module.exports.claimDaily = async (guildId, userId, username) => {
                     upsert: true
                 })
             }
-
-            console.log(claimResult)
             return claimResult
 
         } finally {

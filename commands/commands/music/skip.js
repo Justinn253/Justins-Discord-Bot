@@ -6,7 +6,7 @@ const play = require('./play')
 module.exports = {
     commands: ['skip'],
     cooldown: 3,
-    callback: async (message) => {
+    callback: async (message, args, argsJ, client) => {
         const guildId = message.guild.id
         const embed = new Discord.MessageEmbed()
         const connection = DiscordVoice.getVoiceConnection(guildId)
@@ -18,7 +18,7 @@ module.exports = {
 
             if (message.member.voice.channel != null && message.member.voice.channel != undefined) {
                 embed.setDescription('The current song has been skipped')
-                play.skipSong(guildId, message)
+                play.skipSong(guildId, message, client)
             }
         } else {
             embed.setDescription('I am not connected to any voice channels.')

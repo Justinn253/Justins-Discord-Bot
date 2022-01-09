@@ -192,7 +192,7 @@ module.exports = {
                 })
             }
 
-            if (stealAmount > maxStealAmount) {
+            if (stealAmount > maxStealAmount + 10) {
                 console.log(`Error stealing - ${stealAmount} exceeds ${maxStealAmount}.`)
             } else {
                 await economy.addMoney(guildId, userId, stealAmount)

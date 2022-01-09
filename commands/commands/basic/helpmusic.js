@@ -19,11 +19,11 @@ module.exports = {
                     name: 'queue',
                     value: 'See the current queue.'
                 },{
-                    name: 'clearqueue',
+                    name: 'clear',
                     value: 'Clear the current queue.'
                 },{
                     name: 'leave',
-                    value: 'Have the bot leave channel.'
+                    value: 'Have the bot leave channel. Will also clear the queue.'
                 })
 
         message.channel.send({embeds: [embed]})

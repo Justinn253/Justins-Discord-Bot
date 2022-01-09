@@ -9,17 +9,17 @@ module.exports = {
     cooldown: 3,
     minArgs: 1,
     expectedArgs: '<video url> or <keywords>',
-    callback: async (message, arguments) => {
+    callback: async (message, arguments, argsJoin, client) => {
         let voiceChannel
         const guildId = message.guild.id
 
         if (message.member.voice.channel != null && message.member.voice.channel != undefined) {
-            voiceChannel = message.member.voice.channel.id
+            voiceChannel = message.member.voice.channel
         } else {
             return message.channel.send('You need to be in a voice channel to use this command.')
         }
 
-        if (voiceChannel == undefined || voiceChannel == null) {
+        if (voiceChannel.id == undefined || voiceChannel.id == null) {
             return message.channel.send('You need to be in a voice channel to use this command.')
         }
 
@@ -29,7 +29,7 @@ module.exports = {
             if (video) {
                 await musicQueue.addToQueue(video, guildId)
                 theQueue = await musicQueue.getQueue(guildId)
-                playSong(video, guildId, voiceChannel, message, false)
+                playSong(video, guildId, voiceChannel, message, client)
             } else {
                 message.channel.send('No video results found.')
             }
@@ -40,7 +40,7 @@ module.exports = {
                 message.channel.send(`**${video.title}** has been added to queue position **(${theQueue.length})**`)
                 const connection = DiscordVoice.getVoiceConnection(message.guild.id)
                 if (!connection) {
-                    playSong(theQueue[0], guildId, voiceChannel, message, false)
+                    playSong(theQueue[0], guildId, voiceChannel, message, client)
                 }
             } else {
                 message.channel.send('No video results found.')
@@ -55,7 +55,7 @@ async function videoFinder(query) {
     return (videoResult.videos.length > 1) ? videoResult.videos[0] : null
 }
 
-async function playSong(video, guildId, voiceChannel, message, emptyQueue)  {
+async function playSong(video, guildId, voiceChannel, message, client)  {
     const embed = new Discord.MessageEmbed()
 
     const stream = ytdl(video.url, {
@@ -68,7 +68,7 @@ async function playSong(video, guildId, voiceChannel, message, emptyQueue)  {
     const resource = DiscordVoice.createAudioResource(stream)
 
     const connection = await DiscordVoice.joinVoiceChannel({
-        channelId: voiceChannel,
+        channelId: voiceChannel.id,
         guildId: guildId,
         adapterCreator: message.guild.voiceAdapterCreator
     })
@@ -84,7 +84,7 @@ async function playSong(video, guildId, voiceChannel, message, emptyQueue)  {
             queueLength = await musicQueue.getQueueLength(guildId)
             
             if (queueLength > 0) {
-                playSong(queue[0], guildId, voiceChannel, message, false)
+                playSong(queue[0], guildId, voiceChannel, message, client)
             } else {
                 connection.destroy()
                 const emptyQueueEmbed = new Discord.MessageEmbed()
@@ -94,15 +94,23 @@ async function playSong(video, guildId, voiceChannel, message, emptyQueue)  {
         }
     })
 
+    client.on('voiceStateUpdate', async (oldState, newState) => {
+        if (newState.channel == null || newState.channel == undefined) {
+            player.stop()
+            await musicQueue.clearQueue(guildId)
+            connection.destroy
+        }
+    })
+
     embed.setDescription(`:thumbsup: Now Playing **${video.title}**`)
     message.channel.send({embeds: [embed]})
 } 
 
-module.exports.skipSong = async (guildId, message) => {
+module.exports.skipSong = async (guildId, message, client) => {
     let theQueue = await musicQueue.getQueue(guildId)
-    const voiceChannel = message.member.voice.channel.id
+    const voiceChannel = message.member.voice.channel
     if (theQueue.length != 0) {
-        playSong(theQueue[0], guildId, voiceChannel, message, false)
+        playSong(theQueue[0], guildId, voiceChannel, message, client)
     } else {
         const connection = DiscordVoice.getVoiceConnection(message.guild.id)
         connection.destroy()
