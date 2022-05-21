@@ -20,9 +20,11 @@ module.exports = {
                       'https://cdn.discordapp.com/attachments/923692313149075486/927802604040355840/theDog14.png',
                       'https://cdn.discordapp.com/attachments/923692313149075486/927802604254273546/theDog15.png',
                       'https://cdn.discordapp.com/attachments/923692313149075486/927802604484980746/theDog16.png',
+                      'https://cdn.discordapp.com/attachments/914607504997118036/977419815465656330/theDog17.png',
+                      'https://cdn.discordapp.com/attachments/914607504997118036/977419830871343205/theDog18.png',
                     ]
 
-        const roll = Math.floor(Math.random() * 16)
+        const roll = Math.floor(Math.random() * 18)
         const embed = new Discord.MessageEmbed()
             .setTitle(`Introducing The Dog ${roll + 1}`)
             .setImage(dogs[roll])

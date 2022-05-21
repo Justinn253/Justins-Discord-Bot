@@ -12,10 +12,7 @@ module.exports = {
                 .setFields({
                     name: 'serverinfo, si',
                     value: 'Displays basic information about this server.'
-                },{
-                    name: 'servers',
-                    value: 'Displays every server this bot is in and their member count.'
-                },)
+                })
 
         message.channel.send({embeds: [embed]})
     }
