@@ -24,6 +24,9 @@ module.exports = {
                 },{
                     name: 'thedog',
                     value: 'Show a member of the dogs.'
+                },{
+                    name: 'bingus',
+                    value: 'Puts bingus on display.'
                 })
 
         message.channel.send({embeds: [embed]})
