@@ -6,7 +6,7 @@ const musicQueue = require('../../../features/features/music-queue')
 
 module.exports = {
     commands: ['play', 'p'],
-    cooldown: 3,
+    cooldown: 1,
     minArgs: 1,
     expectedArgs: '<video url> or <keywords>',
     callback: async (message, arguments, argsJoin, client) => {
@@ -85,24 +85,42 @@ async function playSong(video, guildId, voiceChannel, message, client)  {
             
             if (queueLength > 0) {
                 playSong(queue[0], guildId, voiceChannel, message, client)
-            } else {
+            } /*else {
                 connection.destroy()
                 const emptyQueueEmbed = new Discord.MessageEmbed()
                     .setDescription('The queue is empty. Now leaving the voice channel.')
                 message.channel.send({embeds: [emptyQueueEmbed]})
-            }
+            }*/
         }
     })
 
-    client.on('voiceStateUpdate', async (oldState, newState) => {
-        if (newState.channel == null || newState.channel == undefined) {
+    if (!voiceChannel) {
+        return
+    }
+    var leaveInterval = setInterval( async () => {
+        memberCount = voiceChannel.members.size
+        if (memberCount <= 1) {
+            const channelConnection = DiscordVoice.getVoiceConnection(message.guild.id)
             player.stop()
             await musicQueue.clearQueue(guildId)
             connection.destroy
+            channelConnection.destroy()
+            clearInterval(leaveInterval)
         }
-    })
+    }, 15000)
 
-    embed.setDescription(`:thumbsup: Now Playing **${video.title}**`)
+    // client.on('voiceStateUpdate', async (oldState, newState) => {
+    //     console.log(client.voice.channel)
+
+    //     if (newState.channel == null || newState.channel == undefined) {
+    //         player.stop()
+    //         await musicQueue.clearQueue(guildId)
+    //         connection.destroy
+    //     }
+    // })
+
+    embed.setTitle(`:thumbsup: Now Playing **${video.title}**`)
+    embed.setDescription(`${video.url}`)
     message.channel.send({embeds: [embed]})
 } 
 
@@ -111,11 +129,11 @@ module.exports.skipSong = async (guildId, message, client) => {
     const voiceChannel = message.member.voice.channel
     if (theQueue.length != 0) {
         playSong(theQueue[0], guildId, voiceChannel, message, client)
-    } else {
+    } /*else {
         const connection = DiscordVoice.getVoiceConnection(message.guild.id)
         connection.destroy()
         const embed = new Discord.MessageEmbed()
             .setDescription('The queue is empty. Now leaving the voice channel.')
         message.channel.send({embeds: [embed]})
-    }
+    }*/
 }

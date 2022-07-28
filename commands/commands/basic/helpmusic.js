@@ -13,6 +13,9 @@ module.exports = {
                     name: 'play, p <url> OR <keywords>',
                     value: 'Play a song or put a song in the queue.'
                 },{
+                    name: 'join, j',
+                    value: 'Have the bot join your voice channel.'
+                },{
                     name: 'skip',
                     value: 'Skips the current song in the queue.'
                 },{

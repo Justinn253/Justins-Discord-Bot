@@ -5,7 +5,7 @@ const play = require('./play')
 
 module.exports = {
     commands: ['skip'],
-    cooldown: 3,
+    cooldown: 1,
     callback: async (message, args, argsJ, client) => {
         const guildId = message.guild.id
         const embed = new Discord.MessageEmbed()
