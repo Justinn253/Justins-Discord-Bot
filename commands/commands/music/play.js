@@ -104,7 +104,7 @@ async function playSong(video, guildId, voiceChannel, message, client)  {
             player.stop()
             await musicQueue.clearQueue(guildId)
             connection.destroy
-            channelConnection.destroy()
+            channelConnection.destroy
             clearInterval(leaveInterval)
         }
     }, 15000)
